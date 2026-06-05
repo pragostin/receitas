@@ -1,0 +1,50 @@
+{
+  "id": "bolo-de-chocolate",
+  "title": "Bolo de Chocolate",
+  "category": "Bolos",
+  "emoji": "🍫",
+  "description": "Bolo de chocolate fofo e úmido com cobertura cremosa de achocolatado.",
+  "time": "40 min",
+  "oven_temp": "180°C",
+  "difficulty": "Fácil",
+  "ingredients": [
+    {
+      "group": "Massa",
+      "items": [
+        "3 ovos",
+        "¾ xícara de chá de óleo",
+        "1 xícara de chá de água fervente",
+        "2 xícaras de chá de farinha de trigo",
+        "1½ xícara de chá de açúcar",
+        "1 xícara de chá de achocolatado em pó",
+        "1 colher de sopa de fermento em pó"
+      ]
+    },
+    {
+      "group": "Cobertura",
+      "items": [
+        "1 colher de sopa cheia de margarina",
+        "3 colheres de sopa de leite",
+        "1 xícara de chá de achocolatado em pó",
+        "1 xícara de chá de açúcar"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "section": "Massa",
+      "instructions": [
+        "Coloque todos os ingredientes da massa no liquidificador e bata até obter uma massa homogênea e sem pelotas.",
+        "Despeje em assadeira untada e enfarinhada e leve ao forno preaquecido a 180°C por 20–25 minutos.",
+        "Retire do forno e deixe amornar."
+      ]
+    },
+    {
+      "section": "Cobertura",
+      "instructions": [
+        "Misture todos os ingredientes em uma panela e leve ao fogo, mexendo até levantar fervura.",
+        "Despeje sobre o bolo ainda quente e espere esfriar para cortar."
+      ]
+    }
+  ]
+}

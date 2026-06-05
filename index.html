@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receitas</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Receitas">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#1a1a2e">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:       #f5ede0;
+      --terracotta: #c4663a;
+      --ink:        #1a1a2e;
+      --cream:      #fdf8f2;
+      --paper:      #ffffff;
+      --muted:      #8a7f74;
+      --border:     #e6dccc;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── HERO ─────────────────────────────────── */
+    .hero {
+      background: var(--ink);
+      color: var(--sand);
+      padding: 56px 32px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(196,102,58,.32) 0%, transparent 55%),
+        radial-gradient(ellipse at 12% 85%, rgba(196,102,58,.14) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; max-width: 880px; margin: 0 auto; }
+
+    .hero-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--terracotta); margin-bottom: 14px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 6vw, 58px);
+      line-height: 1.08; margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .hero h1 em { font-style: italic; font-weight: 400; color: #e8c4a0; }
+    .hero-sub { font-size: 14px; color: #b0a898; line-height: 1.7; max-width: 380px; }
+    .hero-stat {
+      margin-top: 28px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px; color: #b0a898;
+    }
+    .hero-stat b { color: var(--sand); font-size: 24px; display: block; line-height: 1.2; }
+
+    /* ── GRID ─────────────────────────────────── */
+    .feed {
+      max-width: 880px; margin: 0 auto;
+      padding: 36px 32px 48px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── CARD ─────────────────────────────────── */
+    .card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow .2s, border-color .2s, transform .18s;
+    }
+    .card:hover {
+      box-shadow: 0 8px 36px rgba(26,26,46,.09);
+      border-color: #dcd0bd;
+      transform: translateY(-3px);
+    }
+    .card:active { transform: translateY(-1px); }
+
+    .card-emoji {
+      background: var(--sand);
+      padding: 30px 28px 22px;
+      font-size: 52px;
+      line-height: 1;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-body { padding: 20px 24px 24px; flex: 1; display: flex; flex-direction: column; }
+
+    .card-meta {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: .5px;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .cat-tag {
+      background: var(--sand); color: #9a6038;
+      padding: 3px 9px; border-radius: 8px;
+      font-size: 10px; font-weight: 600; font-family: 'DM Sans', sans-serif;
+      letter-spacing: .2px;
+    }
+    .card-meta .sep { color: var(--border); }
+
+    .card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 14px; color: #5a5248;
+      line-height: 1.65; margin-bottom: 18px; flex: 1;
+    }
+
+    .card-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pill {
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 11px; border-radius: 20px;
+      background: var(--cream); border: 1px solid var(--border);
+      font-size: 12px; color: var(--muted); line-height: 1;
+    }
+    .pill svg {
+      width: 12px; height: 12px;
+      stroke: var(--muted); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* ── CONTROLS (sticky search + chips) ───── */
+    .controls {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(253, 248, 242, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px 12px;
+    }
+    .controls-inner { max-width: 880px; margin: 0 auto; }
+
+    .search-wrap { position: relative; }
+    .search-wrap svg {
+      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+      width: 17px; height: 17px;
+      stroke: var(--muted); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      pointer-events: none;
+    }
+    #search {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border: 1px solid var(--border); border-radius: 28px;
+      background: var(--paper);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px; color: var(--ink);
+      transition: border-color .2s, box-shadow .2s;
+      -webkit-appearance: none;
+    }
+    #search:focus {
+      outline: none;
+      border-color: var(--terracotta);
+      box-shadow: 0 0 0 3px rgba(196,102,58,.12);
+    }
+    #search::placeholder { color: var(--muted); }
+
+    .chips {
+      display: flex; flex-wrap: wrap; gap: 7px;
+      margin-top: 10px;
+    }
+    .chip {
+      padding: 5px 13px; border-radius: 18px;
+      border: 1px solid var(--border);
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      background: var(--paper); color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      transition: all .15s; letter-spacing: .1px;
+      white-space: nowrap; line-height: 1.5;
+    }
+    .chip:hover:not(.active) { border-color: var(--terracotta); color: var(--terracotta); }
+    .chip.active { background: var(--terracotta); color: #fff; border-color: var(--terracotta); }
+    .chip .n {
+      opacity: .65; margin-left: 4px;
+      font-family: 'Space Mono', monospace; font-size: 10px;
+    }
+
+    .result-count {
+      max-width: 880px; margin: 0 auto;
+      padding: 14px 32px 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ── EMPTY ───────────────────────────────── */
+    .empty {
+      grid-column: 1/-1;
+      text-align: center; padding: 64px 20px;
+      color: var(--muted);
+    }
+    .empty-icon { font-size: 36px; margin-bottom: 12px; }
+    .empty-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; color: var(--ink); margin-bottom: 6px;
+    }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer {
+      text-align: center; padding: 28px;
+      color: var(--muted); font-size: 11px;
+      font-family: 'Space Mono', monospace;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 600px) {
+      .hero { padding: 40px 18px 36px; }
+      .controls { padding: 12px 16px 10px; }
+      .result-count { padding: 12px 16px 0; }
+      .feed { padding: 20px 16px 40px; grid-template-columns: 1fr; gap: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">◆ Caderno de</div>
+    <h1><em>Receitas</em></h1>
+    <p class="hero-sub">Receitas da família, organizadas e sempre à mão.</p>
+    <div class="hero-stat">
+      <b id="count">—</b>receitas
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" type="search" placeholder="Buscar por nome, ingrediente ou categoria…" autocomplete="off" autocorrect="off" spellcheck="false">
+    </div>
+    <div class="chips" id="chips"></div>
+  </div>
+</div>
+
+<div class="result-count" id="result-count"></div>
+
+<main class="feed" id="feed">
+  <div class="empty">Carregando receitas…</div>
+</main>
+
+<footer>Receitas · <span id="year"></span></footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ── Add a recipe here when creating a new JSON file ──
+const RECIPE_IDS = ['bolo-de-fuba', 'bolo-de-chocolate'];
+
+let ALL_RECIPES = [];
+let activeCategory = null;
+
+function iconClock() {
+  return `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>`;
+}
+function iconThermo() {
+  return `<svg viewBox="0 0 24 24"><path d="M14 14.76V4a2 2 0 0 0-4 0v10.76a4 4 0 1 0 4 0z"/></svg>`;
+}
+
+// Build a flat search string per recipe (title + category + description + all ingredients)
+function searchIndex(r) {
+  const ingredients = r.ingredients
+    .flatMap(g => g.items)
+    .join(' ');
+  return [r.title, r.category, r.description, r.difficulty, ingredients]
+    .join(' ')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // strip accents for fuzzy match
+}
+
+function normalize(str) {
+  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function renderCard(r) {
+  return `
+    <a class="card" href="recipe.html?id=${r.id}"
+       data-category="${r.category}"
+       data-search="${searchIndex(r)}">
+      <div class="card-emoji">${r.emoji}</div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="cat-tag">${r.category}</span>
+          <span class="sep">·</span>
+          <span>${r.difficulty}</span>
+        </div>
+        <h2>${r.title}</h2>
+        <p class="card-desc">${r.description}</p>
+        <div class="card-pills">
+          <span class="pill">${iconClock()} ${r.time}</span>
+          <span class="pill">${iconThermo()} ${r.oven_temp}</span>
+        </div>
+      </div>
+    </a>
+  `;
+}
+
+function filter() {
+  const query = normalize(document.getElementById('search').value.trim());
+  const cards = document.querySelectorAll('#feed .card');
+  let visible = 0;
+
+  cards.forEach(card => {
+    const matchesQuery = !query || card.dataset.search.includes(query);
+    const matchesCategory = !activeCategory || card.dataset.category === activeCategory;
+    const show = matchesQuery && matchesCategory;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  // Empty state
+  let empty = document.querySelector('#feed .empty');
+  if (visible === 0) {
+    if (!empty) {
+      empty = document.createElement('div');
+      empty.className = 'empty';
+      empty.innerHTML = `
+        <div class="empty-icon">🔍</div>
+        <div class="empty-title">Nenhuma receita encontrada</div>
+        <div>Tente outro termo ou limpe o filtro</div>`;
+      document.getElementById('feed').appendChild(empty);
+    }
+  } else {
+    if (empty) empty.remove();
+  }
+
+  // Result count
+  const total = ALL_RECIPES.length;
+  const countEl = document.getElementById('result-count');
+  if (query || activeCategory) {
+    countEl.textContent = `${visible} de ${total} receita${total !== 1 ? 's' : ''}`;
+  } else {
+    countEl.textContent = `${total} receita${total !== 1 ? 's' : ''}`;
+  }
+}
+
+function renderChips() {
+  const categories = [...new Set(ALL_RECIPES.map(r => r.category))].sort();
+  const counts = {};
+  ALL_RECIPES.forEach(r => { counts[r.category] = (counts[r.category] || 0) + 1; });
+
+  const chips = document.getElementById('chips');
+  chips.innerHTML = '';
+
+  // "Todas" chip
+  const all = document.createElement('button');
+  all.className = 'chip' + (activeCategory === null ? ' active' : '');
+  all.innerHTML = `Todas <span class="n">${ALL_RECIPES.length}</span>`;
+  all.addEventListener('click', () => {
+    activeCategory = null;
+    renderChips();
+    filter();
+  });
+  chips.appendChild(all);
+
+  categories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'chip' + (activeCategory === cat ? ' active' : '');
+    btn.innerHTML = `${cat} <span class="n">${counts[cat]}</span>`;
+    btn.addEventListener('click', () => {
+      activeCategory = activeCategory === cat ? null : cat;
+      renderChips();
+      filter();
+    });
+    chips.appendChild(btn);
+  });
+}
+
+async function loadAll() {
+  const results = await Promise.all(
+    RECIPE_IDS.map(id =>
+      fetch(`recipes/${id}.json`).then(r => r.ok ? r.json() : null).catch(() => null)
+    )
+  );
+  ALL_RECIPES = results.filter(Boolean);
+  document.getElementById('count').textContent = ALL_RECIPES.length;
+
+  const feed = document.getElementById('feed');
+  if (ALL_RECIPES.length === 0) {
+    feed.innerHTML = '<div class="empty"><div class="empty-title">Nenhuma receita encontrada.</div></div>';
+    return;
+  }
+
+  feed.innerHTML = ALL_RECIPES.map(renderCard).join('');
+  renderChips();
+  filter();
+
+  document.getElementById('search').addEventListener('input', filter);
+}
+
+loadAll();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+</script>
+
+</body>
+</html>
