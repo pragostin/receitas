@@ -1,0 +1,39 @@
+{
+  "id": "callies-blobs",
+  "title": "Callie's Blobs",
+  "category": "Snacks",
+  "emoji": "🥜",
+  "description": "Bolinhas energéticas sem forno, cheias de fibras e gorduras boas. Fáceis de fazer e ótimas para levar na bolsa.",
+  "time": "15 min",
+  "oven_temp": "Sem forno",
+  "difficulty": "Fácil",
+  "ingredients": [
+    {
+      "group": "Secos",
+      "items": [
+        "80 g de aveia",
+        "50 g de coco ralado",
+        "70 g de linhaça moída",
+        "75 g de nozes picadas",
+        "1 colher de sopa de chia"
+      ]
+    },
+    {
+      "group": "Líquidos",
+      "items": [
+        "240 g de manteiga de amendoim",
+        "80 ml de agave"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "section": null,
+      "instructions": [
+        "Misture todos os ingredientes secos em uma tigela: aveia, coco ralado, linhaça moída, nozes picadas e chia.",
+        "Adicione a manteiga de amendoim e o agave. Mexa bem até a mistura ganhar consistência e soltar das mãos.",
+        "Modele bolinhas de aproximadamente 4 cm de diâmetro. Leve à geladeira por 30 minutos para firmar."
+      ]
+    }
+  ]
+}
