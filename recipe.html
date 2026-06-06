@@ -55,17 +55,38 @@
     }
     .hero-inner { position: relative; max-width: 880px; margin: 0 auto; }
 
+    .hero-nav {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
     .back-link {
       display: inline-flex; align-items: center; gap: 7px;
       color: #b0a898; text-decoration: none;
       font-family: 'Space Mono', monospace;
       font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
-      margin-bottom: 32px;
       transition: color .18s;
     }
     .back-link:hover { color: var(--sand); }
     .back-link svg {
       width: 14px; height: 14px;
+      stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+      color: #d0c8be; border-radius: 20px;
+      padding: 6px 14px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+      cursor: pointer; transition: background .18s, color .18s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .share-btn:hover { background: rgba(255,255,255,0.18); color: var(--sand); }
+    .share-btn svg {
+      width: 13px; height: 13px;
       stroke: currentColor; fill: none;
       stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
     }
@@ -303,7 +324,13 @@ function render(r) {
   const html = `
     <header class="hero">
       <div class="hero-inner">
-        <a class="back-link" href="index.html">${iconBack()} Receitas</a>
+        <div class="hero-nav">
+          <a class="back-link" href="index.html">${iconBack()} Receitas</a>
+          <button class="share-btn" onclick="shareRecipe('${r.title}')">
+            <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            Partilhar
+          </button>
+        </div>
         <div class="recipe-header">
           <div class="recipe-emoji">${r.emoji}</div>
           <div class="recipe-title-block">
@@ -349,6 +376,16 @@ function renderError(msg) {
       <p><a href="index.html">← Voltar às receitas</a></p>
     </div>
   `;
+}
+
+function shareRecipe(title) {
+  if (navigator.share) {
+    navigator.share({ title: title, url: window.location.href });
+  } else {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      alert('Link copiado!');
+    });
+  }
 }
 
 async function load() {
