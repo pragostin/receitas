@@ -1,0 +1,36 @@
+{
+  "id": "panqueca",
+  "title": "Panqueca",
+  "category": "Café da manhã",
+  "emoji": "🥞",
+  "description": "Panqueca simples e rápida, macia por dentro e levemente dourada. Rende 4 a 6 unidades.",
+  "time": "15 min",
+  "oven_temp": "Frigideira",
+  "difficulty": "Fácil",
+  "ingredients": [
+    {
+      "group": null,
+      "items": [
+        "1 xícara de farinha de trigo",
+        "1 ovo",
+        "1 xícara de leite",
+        "1 colher de chá de fermento em pó",
+        "1 pitada de sal",
+        "1 colher de sopa de açúcar (opcional)",
+        "1 colher de sopa de manteiga derretida ou óleo (opcional)"
+      ]
+    }
+  ],
+  "steps": [
+    {
+      "section": null,
+      "instructions": [
+        "Misture o ovo e o leite em uma tigela.",
+        "Acrescente a farinha, o sal e o açúcar (se usar). Mexa até ficar homogêneo.",
+        "Adicione o fermento por último e mexa delicadamente.",
+        "Aqueça uma frigideira antiaderente em fogo médio e unte levemente com manteiga.",
+        "Coloque cerca de ¼ de xícara da massa na frigideira. Quando surgirem bolhas na superfície (± 2 min), vire e doure por mais 1 minuto."
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-const CACHE = 'receitas-v2';
+const CACHE = 'receitas-v3';
 const STATIC = [
   './recipe.html',
   './manifest.json',
